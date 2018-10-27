@@ -17,16 +17,20 @@ U8G2_SSD1327_EA_W128128_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
 #define VRY_PIN A2
 
 AxisJoystick* joystick;
-
+AxisJoystick::Move goal;
 bool alarm = false;
 int i = 0;
-void setup() {
-  
-  // put your setup code here, to run once:
-  joystick = new AxisJoystick(SW_PIN, VRX_PIN, VRY_PIN);
-  u8g2.begin();
-  Wire.setClock(40000L);
-  u8g2.sendBuffer();
+
+
+AxisJoystick::Move chooseDirection() {
+  switch(random(3)) {
+    case 0: return(AxisJoystick::Move::UP);
+    case 1: return(AxisJoystick::Move::DOWN);
+    case 2: return(AxisJoystick::Move::RIGHT);
+    case 3: return(AxisJoystick::Move::LEFT);
+    default: // bad path
+    return(AxisJoystick::Move::NOT);
+  }
 }
 
 void drawUp()
@@ -50,24 +54,54 @@ void drawRight()
   u8g2.setFont(u8g2_font_open_iconic_all_8x_t);
   u8g2.drawGlyph(30, 80, 0x0076);
 }
+void drawArrow(AxisJoystick::Move goal) {
+  switch(goal) {
+    case AxisJoystick::Move::UP :
+    drawUp();
+    return;
+    case AxisJoystick::Move::DOWN :
+    drawDown();
+    return;
+    case AxisJoystick::Move::RIGHT :
+    drawRight();
+    return;
+    case AxisJoystick::Move::LEFT:
+    drawLeft();
+    return;
+    default: //bad
+    //drawCross();
+    break;
+  }
+}
 void playAlarm() {
   tone(3, 2000, 50);
   delay(100);
   tone(3,4000,50);
   
 }
+void setup() {
+  
+  // put your setup code here, to run once:
+  joystick = new AxisJoystick(SW_PIN, VRX_PIN, VRY_PIN);
+  u8g2.begin();
+  Wire.setClock(40000L);
+  u8g2.sendBuffer();
+  goal = chooseDirection();
+  drawArrow(goal);
+}
 
 void loop() {
   // put your main code here, to run repeatedly:
   const AxisJoystick::Move move = joystick->multipleRead();
+  
   if(move == AxisJoystick::Move::PRESS) {
     alarm = !alarm;
     i=0;
     u8g2.clearBuffer();
     if(alarm) {
-      drawOn();
+      //drawOn();
     } else {
-      drawOff();
+      //drawOff();
     }
     u8g2.sendBuffer();
     while(joystick->multipleRead() == AxisJoystick::Move::PRESS);
