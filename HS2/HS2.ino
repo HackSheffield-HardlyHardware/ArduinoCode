@@ -29,6 +29,10 @@ void setup() {
   // put your setup code here, to run once:
   joystick = new AxisJoystick(SW_PIN, VRX_PIN, VRY_PIN);
   u8g2.begin();
+<<<<<<< HEAD
+=======
+  Wire.setClock(40000L);
+>>>>>>> a97ef637e15f670d2a1a5b1485962d27dd243543
   u8g2.sendBuffer();
   
   strip.begin();
@@ -61,6 +65,7 @@ void drawRight()
   u8g2.drawGlyph(30, 80, 0x0076);
   SetLEDS(128,128,128);
 }
+<<<<<<< HEAD
 
 void SetLEDS(int red, int green , int blue)
 {
@@ -69,6 +74,13 @@ void SetLEDS(int red, int green , int blue)
     strip.setPixelColor(i, red, green, blue);  
   }
   strip.show();
+=======
+void playAlarm() {
+  tone(3, 2000, 50);
+  delay(100);
+  tone(3,4000,50);
+  
+>>>>>>> a97ef637e15f670d2a1a5b1485962d27dd243543
 }
 
 void loop() {
@@ -90,9 +102,7 @@ void loop() {
   }
   
   if(alarm && i == 0) {
-    tone(3, 2000, 50);
-    delay(100);
-    tone(3,4000,50);
+    playAlarm();
     i = 50;
   }
   delay(50);
