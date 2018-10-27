@@ -39,7 +39,12 @@ void drawOff()
   u8g2.setFont(u8g2_font_open_iconic_all_8x_t);
   u8g2.drawGlyph(30, 80, 0x0077);
 }
-
+void playAlarm() {
+  tone(3, 2000, 50);
+  delay(100);
+  tone(3,4000,50);
+  
+}
 
 
 
@@ -60,9 +65,7 @@ void loop() {
   }
   
   if(alarm && i == 0) {
-    tone(3, 2000, 50);
-    delay(100);
-    tone(3,4000,50);
+    playAlarm();
     i = 50;
   }
   delay(50);
