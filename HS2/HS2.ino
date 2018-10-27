@@ -54,21 +54,21 @@ void drawUp()
 {
   u8g2.setFont(u8g2_font_open_iconic_all_8x_t);
   u8g2.drawGlyph(30, 80, 0x0077);
-  SetLEDS(255,0,0);
+  SetLEDS(0,255,0);
 }
 
 void drawDown()
 {
   u8g2.setFont(u8g2_font_open_iconic_all_8x_t);
   u8g2.drawGlyph(30, 80, 0x0074);
-  SetLEDS(0,255,0);
+  SetLEDS(0,255,255);
 
 }
 void drawLeft()
 {
   u8g2.setFont(u8g2_font_open_iconic_all_8x_t);
   u8g2.drawGlyph(30, 80, 0x0075);
-  SetLEDS(0,0,255);
+  SetLEDS(128,0,255);
 }
 void drawRight()
 {
@@ -94,6 +94,20 @@ void SetLEDS(int red, int green , int blue)
   strip.show();
 
 }
+
+void FlashLEDS()
+{
+  SetLEDS(255,0,0);
+  delay(100);
+  SetLEDS(255,0,0);
+  delay(100);
+  SetLEDS(255,0,0);
+  delay(100);
+  SetLEDS(255,0,0);
+  delay(100);
+  SetLEDS(0,0,0);  
+}
+
 void drawArrow(AxisJoystick::Move goal) {
   u8g2.clearBuffer();
   switch(goal) {
