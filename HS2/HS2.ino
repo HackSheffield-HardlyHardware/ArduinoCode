@@ -27,15 +27,27 @@ bool alarm = false;
 int i = 0;
 
 
-AxisJoystick::Move chooseDirection() {
-  switch(random(3)) {
-    case 0: return(AxisJoystick::Move::UP);
-    case 1: return(AxisJoystick::Move::DOWN);
-    case 2: return(AxisJoystick::Move::RIGHT);
-    case 3: return(AxisJoystick::Move::LEFT);
-    default: // bad path
-    return(AxisJoystick::Move::NOT);
+AxisJoystick::Move chooseDirection(AxisJoystick::Move prevGoal) {
+  AxisJoystick::Move nextDirection = prevGoal;
+  while(nextDirection == prevGoal) {
+    switch(random(4)) {
+      case 0: 
+        nextDirection = AxisJoystick::Move::UP;
+        break;
+      case 1: 
+        nextDirection = AxisJoystick::Move::DOWN;
+        break;
+      case 2: 
+        nextDirection = AxisJoystick::Move::RIGHT;
+        break;
+      case 3: 
+        nextDirection = AxisJoystick::Move::LEFT;
+        break;
+      default: // bad path
+        nextDirection = AxisJoystick::Move::NOT;
+    }
   }
+  return(nextDirection);
 }
 
 void drawUp()
@@ -83,23 +95,25 @@ void SetLEDS(int red, int green , int blue)
 
 }
 void drawArrow(AxisJoystick::Move goal) {
+  u8g2.clearBuffer();
   switch(goal) {
     case AxisJoystick::Move::UP :
     drawUp();
-    return;
+    break;
     case AxisJoystick::Move::DOWN :
     drawDown();
-    return;
+    break;
     case AxisJoystick::Move::RIGHT :
     drawRight();
-    return;
+    break;
     case AxisJoystick::Move::LEFT:
     drawLeft();
-    return;
+    break;
     default: //bad
-    //drawCross();
+    drawCross();
     break;
   }
+  u8g2.sendBuffer();
 }
 void playAlarm() {
   tone(3, 2000, 50);
@@ -109,13 +123,13 @@ void playAlarm() {
 
 }
 void setup() {
-  
+  goal = AxisJoystick::Move::NOT;
   // put your setup code here, to run once:
   joystick = new AxisJoystick(SW_PIN, VRX_PIN, VRY_PIN);
   u8g2.begin();
   Wire.setClock(40000L);
   u8g2.sendBuffer();
-  goal = chooseDirection();
+  goal = chooseDirection(goal);
   drawArrow(goal);
   strip.begin();
   strip.show(); //Initialise all pixels off
@@ -128,10 +142,9 @@ void loop() {
   if(move == goal) {
     //alarm = !alarm;
     //i=0;
-    goal = chooseDirection();
-    u8g2.clearBuffer();
+    goal = chooseDirection(goal);
+    
     drawArrow(goal);
-    u8g2.sendBuffer();
     while(joystick->multipleRead() != AxisJoystick::Move::NOT);
   }
   
