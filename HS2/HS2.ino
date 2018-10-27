@@ -65,6 +65,13 @@ void drawRight()
   SetLEDS(128,128,128);
 }
 
+void drawCross()
+{
+  u8g2.setFont(u8g2_font_open_iconic_all_8x_t);
+  u8g2.drawGlyph(30, 80, 0x010c);
+  SetLEDS(255,0,0);
+}
+
 
 void SetLEDS(int red, int green , int blue)
 {
