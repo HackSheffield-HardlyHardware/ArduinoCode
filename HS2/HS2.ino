@@ -21,10 +21,16 @@ AxisJoystick* joystick;
 bool alarm = false;
 int i = 0;
 void setup() {
+  
   // put your setup code here, to run once:
   joystick = new AxisJoystick(SW_PIN, VRX_PIN, VRY_PIN);
   u8g2.begin();
+<<<<<<< HEAD
 
+=======
+  Wire.setClock(40000L);
+  drawOff();
+>>>>>>> a16b8ebc39ae7ec15536b0954ce8258da4a515e8
   u8g2.sendBuffer();
 }
 
