@@ -160,6 +160,8 @@ void loop() {
     
     drawArrow(goal);
     while(joystick->multipleRead() != AxisJoystick::Move::NOT);
+  } else if(move != AxisJoystick::Move::NOT) {
+    FlashLEDS();
   }
   
   if(alarm && i == 0) {
