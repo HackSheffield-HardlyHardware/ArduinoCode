@@ -98,14 +98,13 @@ void SetLEDS(int red, int green , int blue)
 void FlashLEDS()
 {
   SetLEDS(255,0,0);
-  delay(1000);
+  delay(100);
+  SetLEDS(0,0,0);
+  delay(100);
   SetLEDS(255,0,0);
-  delay(1000);
-  SetLEDS(255,0,0);
-  delay(1000);
-  SetLEDS(255,0,0);
-  delay(1000);
-  SetLEDS(0,0,0);  
+  delay(100);
+  SetLEDS(0,0,0);
+  
 }
 
 void drawArrow(AxisJoystick::Move goal) {
