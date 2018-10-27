@@ -41,21 +41,21 @@ void DrawArrow()
 {
 
     int TopY = 30;
-    int TopX = 50;
+    int TopX = 30;
     int ArrowHeight = 50;
-    int PointWidth = 50;
+    int PointWidth = 30;
     int BottomY = TopY+ArrowHeight;
     int BottomX = TopX;
     int PointY = TopY + (ArrowHeight/2);
     int PointX = TopX - PointWidth;
 
     int BoxHeight = 30;
-    int BoxWidth = 60;
+    int BoxWidth = 80;
     int BoxY = ((ArrowHeight - BoxHeight)/2) + TopY;
     int BoxX = TopX;
     
     u8g2.drawTriangle(TopY,TopX, BottomX,BottomY, PointX, PointY);//Top(x,y), Bottom(x,y), Point(x,y)
-    u8g2.drawBox(BoxX,BoxY,BoxWidth,BoxHeight);// x,y,Height,Width
+    u8g2.drawBox(BoxX,BoxY,BoxHeight,BoxWidth);// x,y,Height,Width
 }
 
 void loop() {
