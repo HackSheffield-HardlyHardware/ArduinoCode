@@ -27,36 +27,19 @@ void setup() {
   drawOff();
   u8g2.sendBuffer();
 }
-void drawOn() {
-    u8g2.setFont(u8g2_font_unifont_t_symbols);
-    u8g2.drawGlyph(5, 20, 0x23f6);
-}
-void drawOff() {
-  u8g2.setFont(u8g2_font_unifont_t_symbols);
-    DrawArrow();
-}
-
-
-void DrawArrow()
+void drawOn() 
 {
-
-    int TopY = 30;
-    int TopX = 30;
-    int ArrowHeight = 50;
-    int PointWidth = 30;
-    int BottomY = TopY+ArrowHeight;
-    int BottomX = TopX;
-    int PointY = TopY + (ArrowHeight/2);
-    int PointX = TopX - PointWidth;
-
-    int BoxHeight = 30;
-    int BoxWidth = 80;
-    int BoxY = ((ArrowHeight - BoxHeight)/2) + TopY;
-    int BoxX = TopX;
-    
-    u8g2.drawTriangle(TopY,TopX, BottomX,BottomY, PointX, PointY);//Top(x,y), Bottom(x,y), Point(x,y)
-    u8g2.drawBox(BoxX,BoxY,BoxHeight,BoxWidth);// x,y,Height,Width
+  u8g2.setFont(u8g2_font_open_iconic_all_8x_t);
+  u8g2.drawGlyph(30, 90, 0x0074);
 }
+void drawOff() 
+{
+  u8g2.setFont(u8g2_font_open_iconic_all_8x_t);
+  u8g2.drawGlyph(30, 80, 0x0077);
+}
+
+
+
 
 void loop() {
   // put your main code here, to run repeatedly:
