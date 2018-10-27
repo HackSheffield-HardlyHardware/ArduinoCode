@@ -36,17 +36,6 @@ AxisJoystick::Move chooseDirection() {
     default: // bad path
     return(AxisJoystick::Move::NOT);
   }
-void setup() {
-  // put your setup code here, to run once:
-  joystick = new AxisJoystick(SW_PIN, VRX_PIN, VRY_PIN);
-  u8g2.begin();
-
-  Wire.setClock(40000L);
-
-  u8g2.sendBuffer();
-  
-  strip.begin();
-  strip.show(); //Initialise all pixels off
 }
 
 void drawUp()
@@ -128,23 +117,22 @@ void setup() {
   u8g2.sendBuffer();
   goal = chooseDirection();
   drawArrow(goal);
+  strip.begin();
+  strip.show(); //Initialise all pixels off
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   const AxisJoystick::Move move = joystick->multipleRead();
 
-  if(move == AxisJoystick::Move::PRESS) {
-    alarm = !alarm;
-    i=0;
+  if(move == goal) {
+    //alarm = !alarm;
+    //i=0;
+    goal = chooseDirection();
     u8g2.clearBuffer();
-    if(alarm) {
-      //drawOn();
-    } else {
-      //drawOff();
-    }
+    drawArrow(goal);
     u8g2.sendBuffer();
-    while(joystick->multipleRead() == AxisJoystick::Move::PRESS);
+    while(joystick->multipleRead() != AxisJoystick::Move::NOT);
   }
   
   if(alarm && i == 0) {
