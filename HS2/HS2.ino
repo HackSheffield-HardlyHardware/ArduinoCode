@@ -25,12 +25,7 @@ void setup() {
   // put your setup code here, to run once:
   joystick = new AxisJoystick(SW_PIN, VRX_PIN, VRY_PIN);
   u8g2.begin();
-<<<<<<< HEAD
-
-=======
   Wire.setClock(40000L);
-  drawOff();
->>>>>>> a16b8ebc39ae7ec15536b0954ce8258da4a515e8
   u8g2.sendBuffer();
 }
 
@@ -55,17 +50,12 @@ void drawRight()
   u8g2.setFont(u8g2_font_open_iconic_all_8x_t);
   u8g2.drawGlyph(30, 80, 0x0076);
 }
-<<<<<<< HEAD
 void playAlarm() {
   tone(3, 2000, 50);
   delay(100);
   tone(3,4000,50);
   
 }
-
-=======
->>>>>>> 6d982d958d0069a894dadcf2042a655513eee1fa
-
 
 void loop() {
   // put your main code here, to run repeatedly:
