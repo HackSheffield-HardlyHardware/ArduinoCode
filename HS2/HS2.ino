@@ -24,21 +24,31 @@ void setup() {
   // put your setup code here, to run once:
   joystick = new AxisJoystick(SW_PIN, VRX_PIN, VRY_PIN);
   u8g2.begin();
-  drawOff();
+
   u8g2.sendBuffer();
 }
-void drawOn() 
-{
-  u8g2.setFont(u8g2_font_open_iconic_all_8x_t);
-  u8g2.drawGlyph(30, 90, 0x0074);
-}
-void drawOff() 
+
+void drawUp()
 {
   u8g2.setFont(u8g2_font_open_iconic_all_8x_t);
   u8g2.drawGlyph(30, 80, 0x0077);
 }
 
-
+void drawDown()
+{
+  u8g2.setFont(u8g2_font_open_iconic_all_8x_t);
+  u8g2.drawGlyph(30, 80, 0x0074);
+}
+void drawLeft()
+{
+  u8g2.setFont(u8g2_font_open_iconic_all_8x_t);
+  u8g2.drawGlyph(30, 80, 0x0075);
+}
+void drawRight()
+{
+  u8g2.setFont(u8g2_font_open_iconic_all_8x_t);
+  u8g2.drawGlyph(30, 80, 0x0076);
+}
 
 
 void loop() {
