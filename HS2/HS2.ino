@@ -204,8 +204,10 @@ void loop() {
       strip.setPixelColor(i, 0, 255, 0);  
     }
     strip.show();
-    if(joystick->multipleRead() != AxisJoystick::Move::PRESS) {
+    if(joystick->multipleRead() == AxisJoystick::Move::PRESS) {
       target = 5;
+      goal = chooseDirection(goal);
+     drawArrow(goal);
     }
   }
 }
