@@ -1,5 +1,7 @@
 #include <Arduino.h>
 #include <U8g2lib.h>
+#include "CurieTimerOne.h"
+
 
 #include <Adafruit_NeoPixel.h>
 #define PIN 9  //// what pin are the NeoPixels connected to?
@@ -25,8 +27,27 @@ AxisJoystick* joystick;
 AxisJoystick::Move goal;
 bool alarm = false;
 int i = 0;
+bool spkrOn = false;
+int spkrPin = 3;
+int count = 1000000/(2*4000);
+int divi;
+int target;
 
-
+void oscillateBeeper() {
+  if((divi % 2 || divi > 400) && divi < 800) {
+    spkrOn = !spkrOn;
+    digitalWrite(spkrPin,spkrOn);
+  }
+  if(divi++>20000) {
+    divi = 0;
+  }
+}
+void startAlarm() {
+  CurieTimerOne.start(count, &oscillateBeeper);
+}
+void stopAlarm() {
+    CurieTimerOne.stop();
+}
 AxisJoystick::Move chooseDirection(AxisJoystick::Move prevGoal) {
   AxisJoystick::Move nextDirection = prevGoal;
   while(nextDirection == prevGoal) {
@@ -136,6 +157,7 @@ void playAlarm() {
 
 }
 void setup() {
+  pinMode(spkrPin, OUTPUT);
   goal = AxisJoystick::Move::NOT;
   // put your setup code here, to run once:
   joystick = new AxisJoystick(SW_PIN, VRX_PIN, VRY_PIN);
@@ -146,27 +168,37 @@ void setup() {
   drawArrow(goal);
   strip.begin();
   strip.show(); //Initialise all pixels off
+  target = 5;
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   const AxisJoystick::Move move = joystick->multipleRead();
-
-  if(move == goal) {
-    //alarm = !alarm;
-    //i=0;
-    goal = chooseDirection(goal);
+  if(target > 0) {
+    startAlarm();
     
-    drawArrow(goal);
-    while(joystick->multipleRead() != AxisJoystick::Move::NOT);
-  } else if(move != AxisJoystick::Move::NOT) {
-    FlashLEDS();
+
+    if(move == goal) {
+      target--;
+     goal = chooseDirection(goal);
+    
+     drawArrow(goal);
+     while(joystick->multipleRead() != AxisJoystick::Move::NOT);
+    } else if(move != AxisJoystick::Move::NOT) {
+      FlashLEDS();
+     while(joystick->multipleRead() != AxisJoystick::Move::NOT);
+    }
+  } else {
+    stopAlarm();
+    u8g2.clearBuffer();
+    u8g2.sendBuffer();
+    for (int i = 0; i <30;i++)
+    {
+      strip.setPixelColor(i, 0, 255, 0);  
+    }
+    strip.show();
+    if(joystick->multipleRead() != AxisJoystick::Move::PRESS) {
+      target = 5;
+    }
   }
-  
-  if(alarm && i == 0) {
-    playAlarm();
-    i = 50;
-  }
-  delay(50);
-  if(i> 0) i--;
 }
