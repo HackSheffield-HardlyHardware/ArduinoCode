@@ -105,15 +105,6 @@ void drawCross()
   SetLEDS(255,0,0);
 }
 
-void RainbowCycle(uint8_t interval, direction dir = FORWARD)
-{
-    ActivePattern = RAINBOW_CYCLE;
-    Interval = interval;
-    TotalSteps = 255;
-    Index = 0;
-    Direction = dir;
-}
-
 void SetLEDS(int red, int green , int blue)
 {
     for (int i = 0; i <30;i++)
