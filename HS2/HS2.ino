@@ -154,6 +154,7 @@ void drawArrow(AxisJoystick::Move goal) {
     drawCross();
     break;
   }
+  drawTarget(target);
   u8g2.sendBuffer();
 }
 void playAlarm() {
