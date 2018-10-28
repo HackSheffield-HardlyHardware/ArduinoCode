@@ -131,7 +131,7 @@ void FlashLEDS()
 void drawTarget(int i)
 {
      u8g2.setFont(u8g2_font_gb16st_t_1);
-     u8g2.setCursor(60, 60);
+     u8g2.setCursor(60, 110);
      u8g2.print(i);
 }
 
